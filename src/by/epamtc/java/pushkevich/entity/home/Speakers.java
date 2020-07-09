@@ -2,6 +2,8 @@ package by.epamtc.java.pushkevich.entity.home;
 
 import by.epamtc.java.pushkevich.entity.ElectricalEquipment;
 
+import java.util.Objects;
+
 public class Speakers extends ElectricalEquipment {
     private String numberOfSpeakers;
     private String frequencyRange;
@@ -39,6 +41,22 @@ public class Speakers extends ElectricalEquipment {
 
     public void setCordLength(String cordLength) {
         this.cordLength = cordLength;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Speakers)) return false;
+        if (!super.equals(o)) return false;
+        Speakers speakers = (Speakers) o;
+        return Objects.equals(numberOfSpeakers, speakers.numberOfSpeakers) &&
+                Objects.equals(frequencyRange, speakers.frequencyRange) &&
+                Objects.equals(cordLength, speakers.cordLength);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), numberOfSpeakers, frequencyRange, cordLength);
     }
 
     @Override

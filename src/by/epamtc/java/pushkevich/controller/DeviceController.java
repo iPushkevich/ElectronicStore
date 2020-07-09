@@ -7,30 +7,30 @@ import java.util.List;
 public class DeviceController {
     private static FileRepository repository;
 
-    public static List getDevices(String deviceName, String deviceParameter, String parameterValue){
+    public static List getDevices(String deviceName, String deviceParameter, String parameterValue) {
         List devices;
 
-        if (deviceName.equals("Laptop")){
+        if (deviceName.equals("Laptop")) {
             repository = new LaptopFileRepository();
         }
 
-        if (deviceName.equals("Oven")){
+        if (deviceName.equals("Oven")) {
             repository = new OvenFileRepository();
         }
 
-        if (deviceName.equals("Refrigerator")){
+        if (deviceName.equals("Refrigerator")) {
             repository = new RefrigeratorFileRepository();
         }
 
-        if (deviceName.equals("VacuumCleaner")){
+        if (deviceName.equals("VacuumCleaner")) {
             repository = new VacuumCleanerFileRepository();
         }
 
-        if (deviceName.equals("TabletPC")){
+        if (deviceName.equals("TabletPC")) {
             repository = new TabletPCFileRepository();
         }
 
-        if (deviceName.equals("Speakers")){
+        if (deviceName.equals("Speakers")) {
             repository = new SpeakersFileRepository();
         }
 

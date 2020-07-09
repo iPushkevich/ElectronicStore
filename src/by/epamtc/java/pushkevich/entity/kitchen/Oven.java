@@ -1,5 +1,7 @@
 package by.epamtc.java.pushkevich.entity.kitchen;
 
+import java.util.Objects;
+
 public class Oven extends KitchenEquipment{
     private String capacity;
     private String depth;
@@ -27,6 +29,21 @@ public class Oven extends KitchenEquipment{
 
     public void setDepth(String depth) {
         this.depth = depth;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Oven)) return false;
+        if (!super.equals(o)) return false;
+        Oven oven = (Oven) o;
+        return Objects.equals(capacity, oven.capacity) &&
+                Objects.equals(depth, oven.depth);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), capacity, depth);
     }
 
     @Override

@@ -2,6 +2,8 @@ package by.epamtc.java.pushkevich.entity.kitchen;
 
 import by.epamtc.java.pushkevich.entity.ElectricalEquipment;
 
+import java.util.Objects;
+
 public abstract class KitchenEquipment extends ElectricalEquipment {
     private String weight;
     private String height;
@@ -39,6 +41,22 @@ public abstract class KitchenEquipment extends ElectricalEquipment {
 
     public void setWidth(String width) {
         this.width = width;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof KitchenEquipment)) return false;
+        if (!super.equals(o)) return false;
+        KitchenEquipment that = (KitchenEquipment) o;
+        return Objects.equals(weight, that.weight) &&
+                Objects.equals(height, that.height) &&
+                Objects.equals(width, that.width);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), weight, height, width);
     }
 
     @Override

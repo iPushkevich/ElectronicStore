@@ -2,6 +2,8 @@ package by.epamtc.java.pushkevich.entity.home;
 
 import by.epamtc.java.pushkevich.entity.ElectricalEquipment;
 
+import java.util.Objects;
+
 public class VacuumCleaner extends ElectricalEquipment {
     private String filterType;
     private String bagType;
@@ -59,6 +61,24 @@ public class VacuumCleaner extends ElectricalEquipment {
 
     public void setCleaningWidth(String cleaningWidth) {
         this.cleaningWidth = cleaningWidth;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof VacuumCleaner)) return false;
+        if (!super.equals(o)) return false;
+        VacuumCleaner that = (VacuumCleaner) o;
+        return Objects.equals(filterType, that.filterType) &&
+                Objects.equals(bagType, that.bagType) &&
+                Objects.equals(wandType, that.wandType) &&
+                Objects.equals(motorSpeedRegulation, that.motorSpeedRegulation) &&
+                Objects.equals(cleaningWidth, that.cleaningWidth);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), filterType, bagType, wandType, motorSpeedRegulation, cleaningWidth);
     }
 
     @Override

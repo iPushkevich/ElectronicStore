@@ -2,6 +2,8 @@ package by.epamtc.java.pushkevich.entity.portable;
 
 import by.epamtc.java.pushkevich.entity.PortablePC;
 
+import java.util.Objects;
+
 public class TabletPC extends PortablePC {
     private String flashMemoryCapacity;
     private String color;
@@ -29,6 +31,21 @@ public class TabletPC extends PortablePC {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TabletPC)) return false;
+        if (!super.equals(o)) return false;
+        TabletPC tabletPC = (TabletPC) o;
+        return Objects.equals(flashMemoryCapacity, tabletPC.flashMemoryCapacity) &&
+                Objects.equals(color, tabletPC.color);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), flashMemoryCapacity, color);
     }
 
     @Override

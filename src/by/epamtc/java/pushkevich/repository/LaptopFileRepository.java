@@ -1,30 +1,40 @@
 package by.epamtc.java.pushkevich.repository;
+
 import by.epamtc.java.pushkevich.entity.portable.Laptop;
+
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LaptopFileRepository implements FileRepository {
     private List<Laptop> laptops = new ArrayList<>();
-    private List<String> infoFromFile = DeviceFactory.getDevicesFromFile("Laptop");
+    private List<String> infoFromFile;
+
+    {
+        try {
+            infoFromFile = DeviceFactory.getDevicesFromFile("Laptop");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public void addAllDevicesFromFile() {
+        if (infoFromFile != null) {
+            for (int i = 0; i < infoFromFile.size(); i++) {
+                Laptop laptop = new Laptop();
+                String[] parameters = infoFromFile.get(i).split(", ");
 
-        for (int i = 0; i < infoFromFile.size(); i++) {
-            Laptop laptop = new Laptop();
-            String[] parameters = infoFromFile.get(i).split(", ");
+                laptop.setBatteryCapacity(parameters[0].substring(parameters[0].indexOf("=") + 1));
+                laptop.setOS(parameters[1].substring(parameters[1].indexOf("=") + 1));
+                laptop.setMemoryRom(parameters[2].substring(parameters[2].indexOf("=") + 1));
+                laptop.setSystemMemory(parameters[3].substring(parameters[3].indexOf("=") + 1));
+                laptop.setCPU(parameters[4].substring(parameters[4].indexOf("=") + 1));
+                laptop.setDisplayInches(parameters[5].substring(parameters[5].indexOf("=") + 1));
 
-            laptop.setBatteryCapacity(parameters[0].substring(parameters[0].indexOf("=") + 1));
-            laptop.setOS(parameters[1].substring(parameters[1].indexOf("=") + 1));
-            laptop.setMemoryRom(parameters[2].substring(parameters[2].indexOf("=") + 1));
-            laptop.setSystemMemory(parameters[3].substring(parameters[3].indexOf("=") + 1));
-            laptop.setCPU(parameters[4].substring(parameters[4].indexOf("=") + 1));
-            laptop.setDisplayInches(parameters[5].substring(parameters[5].indexOf("=") + 1));
-
-            laptops.add(laptop);
+                laptops.add(laptop);
+            }
         }
-
-
     }
 
     public List<Laptop> getDevicesWithParams(String paramName, String paramValue) {

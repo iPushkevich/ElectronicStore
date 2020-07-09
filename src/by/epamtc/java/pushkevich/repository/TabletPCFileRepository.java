@@ -2,27 +2,37 @@ package by.epamtc.java.pushkevich.repository;
 
 import by.epamtc.java.pushkevich.entity.portable.TabletPC;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TabletPCFileRepository implements FileRepository {
     private List<TabletPC> tabletPCs = new ArrayList<>();
-    private List<String> infoFromFile = DeviceFactory.getDevicesFromFile("TabletPC");
+    private List<String> infoFromFile;
+
+    {
+        try {
+            infoFromFile = DeviceFactory.getDevicesFromFile("TabletPC");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public void addAllDevicesFromFile() {
+        if (infoFromFile != null) {
+            for (int i = 0; i < infoFromFile.size(); i++) {
+                TabletPC tabletPC = new TabletPC();
+                String[] parameters = infoFromFile.get(i).split(", ");
 
-        for (int i = 0; i < infoFromFile.size(); i++) {
-            TabletPC tabletPC = new TabletPC();
-            String[] parameters = infoFromFile.get(i).split(", ");
+                tabletPC.setBatteryCapacity(parameters[0].substring(parameters[0].indexOf("=") + 1));
+                tabletPC.setDisplayInches(parameters[1].substring(parameters[1].indexOf("=") + 1));
+                tabletPC.setMemoryRom(parameters[2].substring(parameters[2].indexOf("=") + 1));
+                tabletPC.setFlashMemoryCapacity(parameters[3].substring(parameters[3].indexOf("=") + 1));
+                tabletPC.setColor(parameters[4].substring(parameters[4].indexOf("=") + 1));
 
-            tabletPC.setBatteryCapacity(parameters[0].substring(parameters[0].indexOf("=") + 1));
-            tabletPC.setDisplayInches(parameters[1].substring(parameters[1].indexOf("=") + 1));
-            tabletPC.setMemoryRom(parameters[2].substring(parameters[2].indexOf("=") + 1));
-            tabletPC.setFlashMemoryCapacity(parameters[3].substring(parameters[3].indexOf("=") + 1));
-            tabletPC.setColor(parameters[4].substring(parameters[4].indexOf("=") + 1));
-
-            tabletPCs.add(tabletPC);
+                tabletPCs.add(tabletPC);
+            }
         }
     }
 

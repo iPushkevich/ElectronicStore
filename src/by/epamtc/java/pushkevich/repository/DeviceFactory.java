@@ -1,16 +1,13 @@
 package by.epamtc.java.pushkevich.repository;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeviceFactory {
+class DeviceFactory {
     private static final String PATH = "appliance_db";
     private static List<String> devicesFromFile = new ArrayList<>();
 
-    public static List<String> getDevicesFromFile(String objectName) {
+    static List<String> getDevicesFromFile(String objectName) throws FileNotFoundException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(PATH)))) {
             String line;
 
@@ -25,7 +22,7 @@ public class DeviceFactory {
             return devicesFromFile;
 
         } catch (IOException e) {
-            return new ArrayList<>();
+            throw new FileNotFoundException();
         }
     }
 

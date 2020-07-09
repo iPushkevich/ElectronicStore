@@ -2,29 +2,37 @@ package by.epamtc.java.pushkevich.repository;
 
 import by.epamtc.java.pushkevich.entity.home.Speakers;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SpeakersFileRepository implements FileRepository {
     private List<Speakers> speakers = new ArrayList<>();
-    private List<String> infoFromFile = DeviceFactory.getDevicesFromFile("Speakers");
+    private List<String> infoFromFile;
+
+    {
+        try {
+            infoFromFile = DeviceFactory.getDevicesFromFile("Speakers");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public void addAllDevicesFromFile(){
+        if (infoFromFile != null) {
+            for (int i = 0; i < infoFromFile.size(); i++) {
+                Speakers speaker = new Speakers();
+                String[] parameters = infoFromFile.get(i).split(", ");
 
-        for (int i=0; i<infoFromFile.size(); i++){
-            Speakers speaker = new Speakers();
-            String [] parameters = infoFromFile.get(i).split(", ");
+                speaker.setPowerConsumption(parameters[0].substring(parameters[0].indexOf("=") + 1));
+                speaker.setNumberOfSpeakers(parameters[1].substring(parameters[1].indexOf("=") + 1));
+                speaker.setFrequencyRange(parameters[2].substring(parameters[2].indexOf("=") + 1));
+                speaker.setCordLength(parameters[3].substring(parameters[3].indexOf("=") + 1));
 
-            speaker.setPowerConsumption(parameters[0].substring(parameters[0].indexOf("=") + 1));
-            speaker.setNumberOfSpeakers(parameters[1].substring(parameters[1].indexOf("=") + 1));
-            speaker.setFrequencyRange(parameters[2].substring(parameters[2].indexOf("=") + 1));
-            speaker.setCordLength(parameters[3].substring(parameters[3].indexOf("=") + 1));
-
-            speakers.add(speaker);
+                speakers.add(speaker);
+            }
         }
-
-
     }
 
     public List<Speakers> getDevicesWithParams(String paramName, String paramValue) {

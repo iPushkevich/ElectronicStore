@@ -2,6 +2,8 @@ package by.epamtc.java.pushkevich.entity.portable;
 
 import by.epamtc.java.pushkevich.entity.PortablePC;
 
+import java.util.Objects;
+
 public class Laptop extends PortablePC {
     private String OS;
     private String systemMemory;
@@ -39,6 +41,22 @@ public class Laptop extends PortablePC {
 
     public void setCPU(String CPU) {
         this.CPU = CPU;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Laptop)) return false;
+        if (!super.equals(o)) return false;
+        Laptop laptop = (Laptop) o;
+        return Objects.equals(OS, laptop.OS) &&
+                Objects.equals(systemMemory, laptop.systemMemory) &&
+                Objects.equals(CPU, laptop.CPU);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), OS, systemMemory, CPU);
     }
 
     @Override
